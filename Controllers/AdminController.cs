@@ -47,10 +47,13 @@ if (username == adminUser && password == adminPass)
         [HttpGet]
         [Route("panel")]
         public IActionResult Panel()
-        {
-            var products = _context.Products.ToList();
-            return View(products);
-        }
+{
+    var products = _httpClient
+        .GetFromJsonAsync<List<Product>>("https://ea-makina.onrender.com/api/products")
+        .Result;
+
+    return View(products);
+}
 
         
         [HttpGet]
