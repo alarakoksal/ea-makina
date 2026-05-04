@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ea_makina.Data;
 using ea_makina.Models;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace ea_makina.Controllers
 {
@@ -9,32 +9,26 @@ namespace ea_makina.Controllers
     public class AdminController : Controller
     {
         private readonly AppDbContext _context;
-        private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
 
-        public AdminController(AppDbContext context, IHttpClientFactory httpClientFactory, IConfiguration configuration)
-{
-    _context = context;
-    _httpClient = httpClientFactory.CreateClient();
-    _configuration = configuration;
-}
-        
-        [HttpGet]
-        [Route("")]
-        public IActionResult Login()
+        public AdminController(AppDbContext context, IConfiguration configuration)
         {
-            return View();
+            _context = context;
+            _configuration = configuration;
         }
 
-        
+        [HttpGet]
+        [Route("")]
+        public IActionResult Login() => View();
+
         [HttpPost]
         [Route("")]
         public IActionResult Login(string username, string password)
         {
-           var adminUser = _configuration["Admin:Username"];
-var adminPass = _configuration["Admin:Password"];
+            var adminUser = _configuration["Admin:Username"];
+            var adminPass = _configuration["Admin:Password"];
 
-if (username == adminUser && password == adminPass)
+            if (username == adminUser && password == adminPass)
             {
                 return RedirectToAction("Panel");
             }
@@ -43,30 +37,22 @@ if (username == adminUser && password == adminPass)
             return View();
         }
 
-        
         [HttpGet]
         [Route("panel")]
-        public IActionResult Panel()
-{
-    var products = _httpClient
-        .GetFromJsonAsync<List<Product>>("https://ea-makina.onrender.com/api/products")
-        .Result;
-
-    return View(products);
-}
-
-        
-        [HttpGet]
-        [Route("urun-ekle")]
-        public IActionResult AddProduct()
+        public async Task<IActionResult> Panel()
         {
-            return View(new Product());
+            // HttpClient yerine doğrudan veritabanından listeyi çekiyoruz
+            var products = await _context.Products.ToListAsync();
+            return View(products);
         }
 
-        
+        [HttpGet]
+        [Route("urun-ekle")]
+        public IActionResult AddProduct() => View(new Product());
+
         [HttpPost]
         [Route("urun-ekle")]
-        public IActionResult AddProduct(Product product, IFormFile ImageFile)
+        public async Task<IActionResult> AddProduct(Product product, IFormFile ImageFile)
         {
             if (ImageFile != null && ImageFile.Length > 0)
             {
@@ -75,45 +61,46 @@ if (username == adminUser && password == adminPass)
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    ImageFile.CopyTo(stream);
+                    await ImageFile.CopyToAsync(stream);
                 }
-
                 product.ImageUrl = "/images/" + fileName;
             }
 
-            var response = _httpClient.PostAsJsonAsync("http://localhost:5185/api/products", product).Result;
+            // Doğrudan veritabanına ekle
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("Panel");
         }
 
         [HttpGet]
-[Route("urun-sil/{id}")]
-public IActionResult Delete(int id)
-{
-    var response = _httpClient.DeleteAsync($"http://localhost:5185/api/products/{id}").Result;
+        [Route("urun-sil/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if (product != null)
+            {
+                _context.Products.Remove(product);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Panel");
+        }
 
-    return RedirectToAction("Panel");
-}
-
-        
         [HttpGet]
         [Route("urun-duzenle/{id}")]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var product = _context.Products.Find(id);
+            var product = await _context.Products.FindAsync(id);
             return View(product);
         }
 
         [HttpPost]
-[Route("urun-duzenle/{id}")]
-public IActionResult Edit(Product product)
-{
-    var response = _httpClient.PutAsJsonAsync(
-        $"http://localhost:5185/api/products/{product.Id}",
-        product
-    ).Result;
-
-    return RedirectToAction("Panel");
-}
+        [Route("urun-duzenle/{id}")]
+        public async Task<IActionResult> Edit(Product product)
+        {
+            _context.Update(product);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Panel");
+        }
     }
 }
