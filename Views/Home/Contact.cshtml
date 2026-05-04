@@ -1,0 +1,247 @@
+@{
+    ViewData["Title"] = "İletişim | EAda İş Makineleri";
+}
+
+<style>
+    :root {
+        --primary-gold: #f59e0b;
+        --dark-navy: #000000; 
+        --soft-bg: #f8fafc;
+    }
+
+    
+    .nav-link { color: #ffffff !important; opacity: 1 !important; font-weight: 600 !important; }
+
+    .page-bg { background: var(--soft-bg); padding-bottom: 100px; }
+
+
+
+    .contact-header {
+        background: url('/images/hero.jpg');
+        background-size: cover;
+        background-position: center;
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        margin-bottom: -100px;
+    }
+
+    
+    .info-card-3d {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        border-bottom: 4px solid transparent;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.899);
+        transition: 0.3s;
+        height: 100%;
+    }
+
+    .info-card-3d:hover {
+        transform: translateY(-10px);
+        border-color: var(--primary-gold);
+    }
+
+   
+    .form-container {
+        background: white;
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 30px 60px rgba(28, 87, 213, 0.05);
+        border: 1px solid #edf2f7;
+    }
+
+    .input-group-custom { position: relative; margin-bottom: 25px; }
+    .input-group-custom input, .input-group-custom textarea {
+        border: 2px solid #e2e8f0;
+        background: #fff;
+        border-radius: 12px;
+        padding: 15px;
+        width: 100%;
+        transition: 0.3s;
+    }
+
+    .input-group-custom input:focus, .input-group-custom textarea:focus {
+        border-color: var(--primary-gold);
+        outline: none;
+        background: #fff;
+    }
+
+    
+    .faq-item {
+        background: white !important;
+        border-radius: 12px !important;
+        margin-bottom: 15px;
+        border: 1px solid #e2e8f0 !important;
+        overflow: hidden;
+    }
+    
+    .accordion-button:not(.collapsed) {
+        background-color: rgba(245, 158, 11, 0.1);
+        color: var(--dark-navy);
+    }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: 0.6s all ease-out; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+</style>
+
+<div class="page-bg">
+    <div class="contact-header">
+        <div class="container mt-5">
+            <h1 class="display-4 fw-bold reveal active">İletişim</h1>
+            <p class="lead opacity-75">EAda profesyonel çözüm merkezi</p>
+        </div>
+    </div>
+
+    <div class="container position-relative" style="z-index: 10;">
+        <div class="row g-4 mb-5">
+            <div class="col-md-4 reveal">
+                <div class="info-card-3d text-center">
+                    <div class="fs-1 text-warning mb-3"><i class="bi bi-telephone-outbound"></i></div>
+                    <h5 class="fw-bold" style="color: var(--dark-navy);">7/24 Çağrı Merkezi</h5>
+                    <p class="text-muted small">Hızlı kiralama ve destek hattı.</p>
+                    <a href="tel:+905413524461" class="stretched-link text-decoration-none fw-bold" style="color: var(--primary-gold);">+90 541 352 44 61</a>
+                </div>
+            </div>
+            <div class="col-md-4 reveal" style="transition-delay: 0.1s">
+                <div class="info-card-3d text-center">
+                    <div class="fs-1 text-warning mb-3"><i class="bi bi-envelope-paper"></i></div>
+                    <h5 class="fw-bold" style="color: var(--dark-navy);">E-Posta</h5>
+                    <p class="text-muted small">Teklif ve kurumsal yazışmalar.</p>
+                    <a href="mailto:info@eada.com" class="stretched-link text-decoration-none fw-bold" style="color: var(--primary-gold);">info@eada.com</a>
+                </div>
+            </div>
+            <div class="col-md-4 reveal" style="transition-delay: 0.2s">
+                <div class="info-card-3d text-center">
+                    <div class="fs-1 text-warning mb-3"><i class="bi bi-geo-alt"></i></div>
+                    <h5 class="fw-bold" style="color: var(--dark-navy);">Merkez</h5>
+                    <p class="text-muted small">Arıza ve bakım merkezi.</p>
+                    <span class="fw-bold text-dark">Ostim, Ankara</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-5">
+            <div class="col-lg-7 reveal">
+                <div class="form-container">
+                    <h3 class="fw-bold mb-4" style="color: var(--dark-navy);">Hızlı Teklif Formu</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group-custom">
+                                <input type="text" id="name" placeholder="Adınız Soyadınız" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group-custom">
+                                <input type="tel" id="phone" placeholder="Telefon Numaranız">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group-custom">
+                        <textarea id="message" rows="5" placeholder="Mesajınız veya makine talebiniz..."></textarea>
+                    </div>
+                    <button onclick="sendToWhatsApp(event)" class="btn btn-warning w-100 py-3 rounded-pill fw-bold shadow-sm">
+                        <i class="bi bi-whatsapp me-2"></i> Talebi Gönder
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-lg-5 reveal">
+                <h4 class="fw-bold mb-4" style="color: var(--dark-navy);">Sıkça Sorulan Sorular</h4>
+                <div class="accordion accordion-flush" id="faqAccordion">
+                    <div class="faq-item shadow-sm">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                Nakliye hizmeti kiralama bedeline dahil mi?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted small">
+                                Nakliye süreci mesafeye göre değişkenlik gösterir. Birçok bölgemizde lojistik ağımız sayesinde uygun maliyetli çözümler sunuyoruz.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item shadow-sm">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                Operatör desteği sağlıyor musunuz?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted small">
+                                Evet, tüm makinelerimiz için uzman operatör desteği mevcuttur. Dilerseniz sadece makine olarak da kiralayabilirsiniz.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-item shadow-sm">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                Minimum kiralama süresi nedir?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted small">
+                                Proje bazlı olarak günlük, haftalık veya aylık kiralama seçeneklerimiz mevcuttur. Detaylar için bizimle iletişime geçebilirsiniz.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+
+        <div class="mt-5 reveal">
+            <div class="rounded-4 overflow-hidden shadow-lg border-5 border-white">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d192698.628198539!2d28.872097034444535!3d41.00269384665487!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa7040068086b%3A0xe1ccfe10201103de!2zSXPZ dGFuYnVs!5e0!3m2!1str!2str!4v1715420000000!5m2!1str!2str" 
+                    width="100%" 
+                    height="450" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <script>
+        function sendToWhatsApp(e) {
+            const btn = e.currentTarget;
+            const name = document.getElementById("name").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const message = document.getElementById("message").value.trim();
+
+            if (!name) { alert("Lütfen adınızı giriniz."); return; }
+
+            btn.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Bekleyiniz...`;
+            
+            const text = `🚜 *EAda İletişim Formu*%0A%0A*İsim:* ${name}%0A*Tel:* ${phone}%0A*Mesaj:* ${message}`;
+            const url = `https://wa.me/905413524461?text=${text}`;
+
+            setTimeout(() => {
+                window.open(url, '_blank');
+                btn.innerHTML = `<i class="bi bi-whatsapp me-2"></i> Talebi WhatsApp'tan Gönder`;
+            }, 800);
+        }
+
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            reveals.forEach(el => {
+                var windowHeight = window.innerHeight;
+                var elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 50) { el.classList.add("active"); }
+            });
+        }
+        window.addEventListener("scroll", reveal);
+        window.addEventListener("load", reveal);
+    </script>
+}

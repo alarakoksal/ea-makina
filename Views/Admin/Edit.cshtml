@@ -1,0 +1,166 @@
+@model ea_makina.Models.Product
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;600;900&display=swap');
+
+    :root {
+        --accent: #f59e0b;
+        --dark-bg: #0a0a0a;
+        --input-bg: rgba(255, 255, 255, 0.03);
+    }
+
+    body { background: #fdfdfd; font-family: 'Inter', sans-serif; }
+
+    
+    .admin-form-wrapper {
+        max-width: 800px;
+        margin: 60px auto;
+    }
+
+    .premium-form-card {
+        background: var(--dark-bg);
+        border-radius: 30px;
+        padding: 50px;
+        border: 1px solid rgba(245, 158, 11, 0.2); 
+        box-shadow: 0 40px 80px rgba(0,0,0,0.15);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .form-header h2 {
+        font-family: 'Syncopate', sans-serif;
+        color: #fff;
+        font-size: 1.4rem;
+        letter-spacing: 6px;
+        text-transform: uppercase;
+        margin-bottom: 40px;
+        border-left: 4px solid var(--accent);
+        padding-left: 20px;
+    }
+
+    .form-label {
+        color: var(--accent);
+        font-weight: 800;
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .form-control-premium {
+        background: var(--input-bg) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 12px !important;
+        padding: 15px 20px !important;
+        color: #fff !important;
+        transition: 0.3s !important;
+    }
+
+    .form-control-premium:focus {
+        border-color: var(--accent) !important;
+        background: rgba(255, 255, 255, 0.07) !important;
+        box-shadow: 0 0 15px rgba(245, 158, 11, 0.1) !important;
+        outline: none;
+    }
+
+   
+    .btn-group-custom {
+        display: flex;
+        gap: 15px;
+        margin-top: 40px;
+    }
+
+    .btn-update {
+        background: var(--accent);
+        color: #000;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding: 18px 40px;
+        border-radius: 12px;
+        border: none;
+        transition: 0.4s;
+        flex: 2;
+        cursor: pointer;
+    }
+
+    .btn-update:hover {
+        background: #fff;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-cancel {
+        background: rgba(255, 255, 255, 0.05);
+        color: #fff;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 18px 30px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        text-decoration: none;
+        text-align: center;
+        transition: 0.3s;
+        flex: 1;
+        font-size: 0.8rem;
+    }
+
+    .btn-cancel:hover {
+        background: rgba(220, 38, 38, 0.1);
+        color: #ff4d4d;
+        border-color: #ff4d4d;
+    }
+</style>
+
+<div class="admin-form-wrapper">
+    <div class="premium-form-card animate__animated animate__fadeIn">
+        
+        <div class="form-header">
+            <h2>Veri <span style="color: var(--accent)">Revizyonu</span></h2>
+        </div>
+
+        <form method="post">
+            <input type="hidden" name="Id" value="@Model.Id" />
+
+            <div class="form-group-custom mb-4">
+                <label class="form-label">Ürün / Model Tanımı</label>
+                <input type="text" name="Name" value="@Model.Name" class="form-control-premium w-100" />
+            </div>
+
+            <div class="form-group-custom mb-4">
+                <label class="form-label">Sistem Açıklaması</label>
+                <textarea name="Description" class="form-control-premium w-100" rows="4">@Model.Description</textarea>
+            </div>
+
+            <div class="form-group-custom mb-4">
+                <label class="form-label">Güncel Fiyat (₺)</label>
+                <input type="number" step="0.01" name="Price" value="@Model.Price" class="form-control-premium w-100" />
+            </div>
+            
+           <div class="form-group-custom mb-4">
+    <label class="form-label">Üretici Marka</label>
+
+    <select name="Brand" class="form-control-premium w-100" required>
+        <option value="XCMG" selected="@(Model.Brand == "XCMG")">XCMG</option>
+        <option value="Hyundai" selected="@(Model.Brand == "Hyundai")">Hyundai</option>
+        <option value="Hitachi" selected="@(Model.Brand == "Hitachi")">Hitachi</option>
+        <option value="Volvo" selected="@(Model.Brand == "Volvo")">Volvo</option>
+        <option value="Komatsu" selected="@(Model.Brand == "Komatsu")">Komatsu</option>
+    </select>
+</div>
+
+            <div class="btn-group-custom">
+                <button type="submit" class="btn-update">Değişiklikleri Uygula</button>
+                <a href="/yonetim/panel" class="btn-cancel d-flex align-items-center justify-content-center">İptal</a>
+            </div>
+
+        </form>
+
+    </div>
+</div>

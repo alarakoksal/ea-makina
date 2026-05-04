@@ -1,0 +1,170 @@
+@model List<ea_makina.Models.Product>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;600;900&display=swap');
+
+    :root {
+        --accent: #f59e0b;
+        --dark-surface: #0a0a0a;
+    }
+
+    body { background: #fdfdfd; font-family: 'Inter', sans-serif; }
+
+    
+    .admin-header-box {
+        background: var(--dark-surface);
+        padding: 40px;
+        border-radius: 24px;
+        margin-bottom: 40px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+
+    .admin-header-box h1 {
+        font-family: 'Syncopate', sans-serif;
+        color: #fff;
+        font-size: 1.5rem;
+        letter-spacing: 5px;
+        margin: 0;
+        text-transform: uppercase;
+    }
+
+    
+    .btn-add-premium {
+        background: var(--accent);
+        color: #000;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding: 15px 30px;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: 0.3s;
+        font-size: 0.8rem;
+    }
+
+    .btn-add-premium:hover {
+        background: #fff;
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(245, 158, 11, 0.2);
+    }
+
+    
+    .admin-product-card {
+        background: var(--dark-surface);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 20px;
+        padding: 25px;
+        height: 100%;
+        transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+    }
+
+    .admin-product-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--accent);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    }
+
+    .card-brand-label {
+        color: var(--accent);
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .card-machine-name {
+        font-family: 'Syncopate', sans-serif;
+        color: #fff;
+        font-size: 1rem;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    .card-machine-desc {
+        color: rgba(255,255,255,0.4);
+        font-size: 0.85rem;
+        line-height: 1.5;
+        min-height: 45px;
+    }
+
+    
+    .admin-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .price-badge {
+        font-weight: 900;
+        color: var(--accent);
+        font-size: 1.1rem;
+    }
+
+    .btn-action {
+        padding: 8px 15px;
+        border-radius: 8px;
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-decoration: none;
+        transition: 0.3s;
+        flex: 1;
+        text-align: center;
+    }
+
+    .btn-edit { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+    .btn-edit:hover { background: #fff; color: #000; }
+
+    .btn-delete { background: rgba(220, 38, 38, 0.1); color: #ff4d4d; border: 1px solid rgba(220, 38, 38, 0.2); }
+    .btn-delete:hover { background: #dc2626; color: #fff; }
+
+</style>
+
+<div class="container mt-5">
+
+    <div class="admin-header-box">
+        <h1>Yönetim <span style="color: var(--accent)">Paneli</span></h1>
+        <a href="/yonetim/urun-ekle" class="btn-add-premium">+ YENİ ÜRÜN EKLE</a>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="admin-product-card">
+                    
+                    <span class="card-brand-label">@item.Brand</span>
+                    <span class="card-machine-name">@item.Name</span>
+                    
+                    <p class="card-machine-desc">@item.Description</p>
+
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="price-badge">@item.Price ₺</span>
+                    </div>
+
+                    <div class="admin-actions">
+                        <a href="/yonetim/urun-duzenle/@item.Id" class="btn-action btn-edit">Düzenle</a>
+                        <a href="/yonetim/urun-sil/@item.Id" class="btn-action btn-delete">Sil</a>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+
+</div>

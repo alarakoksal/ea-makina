@@ -1,0 +1,139 @@
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;600;900&display=swap');
+
+    :root {
+        --accent: #f59e0b;
+        --dark-card: #0f0f0f;
+    }
+
+    .product-section {
+        background: #ffffff;
+        padding: 80px 0;
+    }
+
+    .premium-machine-card {
+        background: #000000;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 24px;
+        overflow: hidden;
+        transition: all 0.5s;
+        height: 100%;
+    }
+
+    .premium-machine-card:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        border-color: var(--accent);
+    }
+
+    .machine-img-container {
+        position: relative;
+        height: 250px;
+        overflow: hidden;
+    }
+
+    .machine-img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .brand-tag {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: var(--accent);
+        color: #000;
+        font-weight: 900;
+        font-size: 0.7rem;
+        padding: 6px 15px;
+        border-radius: 50px;
+    }
+
+    .machine-content {
+        padding: 30px;
+        color: #fff;
+    }
+
+    .machine-title {
+        font-family: 'Syncopate', sans-serif;
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+    }
+
+    .machine-desc {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.5);
+        margin-bottom: 25px;
+    }
+
+    .machine-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .price-tag {
+        font-weight: 900;
+        color: var(--accent);
+        font-size: 1.3rem;
+    }
+
+    .detail-btn {
+        color: #fff;
+        text-decoration: none;
+        border-bottom: 2px solid var(--accent);
+    }
+</style>
+
+<div class="product-section">
+    <div class="container">
+        
+        <div class="text-center mb-5">
+            <h2 style="font-family: 'Syncopate', sans-serif; letter-spacing: 8px; color: #000;">MAKİNE PARKURU</h2>
+            <div style="width: 60px; height: 4px; background: var(--accent); margin: 20px auto;"></div>
+        </div>
+
+        <div class="row g-4" id="productList"></div>
+    </div>
+</div>
+
+<script>
+fetch("/api/products")
+    .then(res => res.json())
+    .then(data => {
+
+        let html = "";
+
+        data.forEach(item => {
+
+            html += `
+            <div class="col-lg-4 col-md-6">
+                <div class="premium-machine-card shadow-lg">
+                    
+                    <div class="machine-img-container">
+                        <span class="brand-tag">${item.brand}</span>
+                        <img src="${item.imageUrl ? item.imageUrl : 'https://via.placeholder.com/600x400'}" />
+                    </div>
+
+                    <div class="machine-content">
+                        <h5 class="machine-title">${item.name}</h5>
+                        <p class="machine-desc">${item.description}</p>
+                        
+                        <div class="machine-footer">
+                            <div class="price-tag">
+                                ${Number(item.price).toLocaleString()} ₺
+                            </div>
+                            <a href="#" class="detail-btn">İncele</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            `;
+        });
+
+        document.getElementById("productList").innerHTML = html;
+    })
+    .catch(err => console.error(err));
+</script>

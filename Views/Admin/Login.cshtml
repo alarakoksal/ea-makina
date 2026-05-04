@@ -1,0 +1,150 @@
+@{
+    Layout = null; 
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Eada</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        @@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;600;900&display=swap');
+
+        :root { --accent: #f59e0b; }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background: #000; font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+
+        
+        .login-universe {
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%);
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
+
+        
+        .energy-sphere {
+            position: absolute;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(50px);
+            animation: float 10s infinite alternate ease-in-out;
+            z-index: 1;
+        }
+        .s1 { top: -100px; right: -50px; }
+        .s2 { bottom: -150px; left: -100px; animation-delay: -5s; }
+
+        @@keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 100px) scale(1.2); }
+        }
+
+        
+        .grid-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(245, 158, 11, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(circle, black, transparent 80%);
+            z-index: 2;
+        }
+
+        
+        .login-card {
+            width: 380px;
+            padding: 50px;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 30px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.9);
+            z-index: 10;
+            position: relative;
+            text-align: center;
+        }
+
+        .login-card::after {
+            content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border-radius: 32px; background: linear-gradient(45deg, var(--accent), transparent, var(--accent));
+            z-index: -1; opacity: 0.2;
+        }
+
+        .login-card h2 {
+            font-family: 'Syncopate', sans-serif;
+            letter-spacing: 6px; color: #fff; font-size: 1.1rem;
+            margin-bottom: 40px; text-transform: uppercase;
+        }
+
+        
+        .input-box { width: 100%; margin-bottom: 25px; text-align: left; }
+        .input-box label { 
+            color: var(--accent); font-size: 0.65rem; font-weight: 800; 
+            letter-spacing: 2px; text-transform: uppercase; display: block; margin-bottom: 8px;
+        }
+        .input-box input {
+            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            padding: 15px; border-radius: 12px; color: #fff; font-family: 'Inter', sans-serif;
+            transition: 0.3s; box-sizing: border-box;
+        }
+        .input-box input:focus {
+            outline: none; border-color: var(--accent); background: rgba(255,255,255,0.1);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+        }
+
+        
+        .login-btn {
+            width: 100%; padding: 16px; border: none; border-radius: 12px;
+            background: var(--accent); color: #000; font-weight: 900;
+            letter-spacing: 3px; cursor: pointer; transition: 0.4s; margin-top: 10px;
+        }
+        .login-btn:hover { background: #fff; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(245, 158, 11, 0.4); }
+
+        .error-alert {
+            color: #ff4d4d; font-size: 0.8rem; margin-top: 20px;
+            font-weight: 600; padding: 10px; border: 1px solid #ff4d4d; border-radius: 8px;
+            background: rgba(255, 77, 77, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-universe">
+    <div class="grid-overlay"></div>
+    <div class="energy-sphere s1"></div>
+    <div class="energy-sphere s2"></div>
+
+    <div class="login-card animate__animated animate__zoomIn">
+        <h2>EADA <span style="color: var(--accent)">İŞ MAKİNALARI</span></h2>
+        
+        <form method="post">
+            <div class="input-box">
+                <label>Kullanıcı Adı</label>
+                <input type="text" name="username" placeholder="Username" required>
+            </div>
+            <div class="input-box">
+                <label>Şifre</label>
+                <input type="password" name="password" placeholder="••••••••" required>
+            </div>
+            
+            <button type="submit" class="login-btn">Giriş yap</button>
+        </form>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="error-alert animate__animated animate__shakeX">
+                ACCESS DENIED: @ViewBag.Error
+            </div>
+        }
+    </div>
+</div>
+
+</body>
+</html>

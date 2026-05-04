@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EAda İş Makinaları</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    
+    <style>
+        :root {
+            --ea-orange: #f59e0b;
+            --ea-dark: #0a0a0a;
+            --ea-gray: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #fcfcfc;
+        }
+
+        
+        .navbar-custom {
+            background-color: var(--ea-dark) !important;
+            padding: 15px 0;
+            border-bottom: 2px solid var(--ea-orange);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+            color: white !important;
+        }
+
+        .navbar-brand span {
+            color: var(--ea-orange);
+            font-weight: 900;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 20px !important;
+            transition: 0.3s;
+            color: rgba(255,255,255,0.7) !important;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--ea-orange) !important;
+        }
+
+        
+        footer {
+            background-color: var(--ea-dark) !important;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 50px 0 30px 0;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .footer-credit {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 30px;
+            padding-top: 20px;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 10px 25px rgba(37,211,102,0.4);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.4s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1) translateY(-5px);
+            color: white;
+            box-shadow: 0 15px 30px rgba(37,211,102,0.6);
+        }
+
+        
+        .main-content {
+            flex-grow: 1;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom shadow-lg">
+            <div class="container px-4">
+
+                <a class="navbar-brand fw-extrabold" asp-controller="Home" asp-action="Index">
+                    <span>E</span>ADA İŞ MAKİNALARI
+                </a>
+
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")"
+                               asp-controller="Home" asp-action="Index">Ana Sayfa</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Kiralama" ? "active" : "")" 
+                               asp-controller="Home" asp-action="Kiralama">Kiralama</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Revizyon" ? "active" : "")" 
+                               asp-controller="Home" asp-action="Revizyon">Revizyon</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "YedekParca" ? "active" : "")" 
+                               asp-controller="Home" asp-action="Yedek">Yedek Parça</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Contact" ? "active" : "")"
+                               asp-controller="Home" asp-action="Contact">İletişim</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        @RenderBody()
+    </div>
+
+    <footer>
+        <div class="container text-center">
+            <div class="footer-logo">EA<span>DA</span></div>
+            <p class="mb-1 fw-light text-white-50">Güçlü Makine Parkı, Güvenilir Çözümler.</p>
+            
+            <div class="footer-credit">
+                <p class="mb-1">© @DateTime.Now.Year EAda İş Makinaları | Tüm hakları saklıdır.</p>
+                <span style="letter-spacing: 1px;">
+                    Designed & Developed by <b style="color: var(--ea-orange);">Alara Köksal</b>
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/905413524461?text=Merhaba,%20bilgi%20almak%20istiyorum." 
+       class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

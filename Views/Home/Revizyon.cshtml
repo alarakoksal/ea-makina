@@ -1,0 +1,224 @@
+@{
+    ViewData["Title"] = "Revizyon | Eada Heavy Industries";
+}
+
+
+<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;600;900&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --accent: #f59e0b;
+        --bg: #050505;
+        --card-bg: #0f0f0f;
+    }
+
+    body {
+        background: var(--bg);
+        color: #fff;
+        font-family: 'Inter', sans-serif;
+        overflow-x: hidden;
+    }
+
+    
+    .rev-hero {
+        height: 60vh;
+        background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('/images/rev.png');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border-bottom: 5px solid var(--accent);
+    }
+
+    .rev-hero h1 {
+        font-family: 'Syncopate', sans-serif;
+        font-size: clamp(2rem, 6vw, 4rem);
+        letter-spacing: 10px; 
+        text-transform: uppercase;
+        text-shadow: 0 5px 25px rgba(0,0,0,0.8); 
+    }
+
+    .rev-hero p {
+        letter-spacing: 5px;
+        opacity: 0.8;
+        text-shadow: 0 3px 15px rgba(0,0,0,0.7);
+    }
+
+    
+    .component-section {
+        padding: 100px 8%;
+        background: #fff;
+        color: #000;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 80px;
+    }
+
+    .section-title h2 {
+        font-family: 'Syncopate', sans-serif;
+        font-size: 2.5rem;
+        letter-spacing: 6px;
+        margin-bottom: 10px;
+    }
+
+    .section-title .line {
+        width: 100px;
+        height: 5px;
+        background: var(--accent);
+        margin: 0 auto;
+    }
+
+    .comp-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+    }
+
+    .comp-card {
+        background: #000;
+        color: #fff;
+        padding: 40px;
+        border-radius: 20px;
+        transition: 0.4s;
+        border: 1px solid #222;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .comp-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--accent);
+    }
+
+    .comp-card h3 {
+        font-family: 'Syncopate', sans-serif;
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+        letter-spacing: 2px;
+    }
+
+    .comp-card p {
+        font-size: 0.9rem;
+        color: rgba(255,255,255,0.6);
+        line-height: 1.6;
+    }
+
+   
+    .vehicle-section {
+        padding: 100px 8%;
+        background: #050505;
+    }
+
+    .vehicle-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .vehicle-item {
+        border: 1px solid rgba(255,255,255,0.1);
+        padding: 30px;
+        text-align: center;
+        transition: 0.3s;
+        border-radius: 10px;
+    }
+
+    .vehicle-item:hover {
+        background: var(--accent);
+        color: #000;
+    }
+
+    .vehicle-item h4 {
+        font-family: 'Syncopate', sans-serif;
+        font-size: 0.9rem;
+        letter-spacing: 3px;
+    }
+
+    
+    .rev-cta {
+        padding: 80px 8%;
+        background: var(--accent);
+        color: #000;
+        text-align: center;
+    }
+
+    .rev-cta h2 {
+        font-family: 'Syncopate', sans-serif;
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+
+    .btn-dark-premium {
+        display: inline-block;
+        padding: 20px 50px;
+        background: #000;
+        color: #fff !important;
+        text-decoration: none;
+        font-weight: 900;
+        letter-spacing: 3px;
+        border-radius: 50px;
+        transition: 0.4s;
+    }
+
+    .btn-dark-premium:hover {
+        transform: scale(1.1);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+</style>
+
+<section class="rev-hero">
+    <div>
+        <h1>REVİZYON <span style="color:var(--accent)">MERKEZİ</span></h1>
+        <p>İKİNCİ ÖMÜR, SIFIR KONDİSYON</p>
+    </div>
+</section>
+
+<section class="component-section">
+    <div class="section-title">
+        <h2>TEKNİK ÇÖZÜMLER</h2>
+        <div class="line"></div>
+    </div>
+
+    <div class="comp-grid">
+        <div class="comp-card">
+            <h3>MOTOR GRUBU</h3>
+            <p>Tüm markaların motorlarında rektifiye, yakıt sistemi ayarları ve performans testleri orijinal standartlarda yapılır.</p>
+        </div>
+        <div class="comp-card">
+            <h3>HİDROLİK SİSTEM</h3>
+            <p>Pompa, silindir ve hidrolik sistemlerin revizyonu ile makinenizin gücünü ilk günkü seviyesine getiriyoruz.</p>
+        </div>
+        <div class="comp-card">
+            <h3>YÜRÜYÜŞ AKSAMI</h3>
+            <p>Palet, zincir, makara ve yürüyüş motorlarının komple bakımı ve parça değişimi ile kesintisiz hareket kabiliyeti.</p>
+        </div>
+        <div class="comp-card">
+            <h3>VALF VE KONTROL</h3>
+            <p>Valf gruplarının hassas temizliği, sızdırmazlık testleri ve beyin ünitelerinin kalibrasyonu uzman ekibimizce yapılır.</p>
+        </div>
+    </div>
+</section>
+
+<section class="vehicle-section">
+    <div class="section-title">
+        <h2 style="color:#fff">REVİZE EDİLEN ARAÇLAR</h2>
+        <div class="line"></div>
+    </div>
+
+    <div class="vehicle-grid">
+        <div class="vehicle-item"><h4>EKSKAVATÖR</h4></div>
+        <div class="vehicle-item"><h4>BEKOLODER</h4></div>
+        <div class="vehicle-item"><h4>DOZER</h4></div>
+        <div class="vehicle-item"><h4>GREYDER</h4></div>
+        <div class="vehicle-item"><h4>LODER</h4></div>
+    </div>
+</section>
+
+<section class="rev-cta">
+    <h2>MAKİNENİZİ YENİDEN HAYATA DÖNDÜRELİM</h2>
+    <a href="/Home/Contact" class="btn-dark-premium">TEKNİK DESTEK AL</a>
+</section>
