@@ -19,6 +19,18 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.EnsureCreated();
+    if (!db.Products.Any())
+{
+    db.Products.Add(new Product
+    {
+        Name = "Test Ürün",
+        Description = "Test açıklama",
+        Price = 0,
+        ImageUrl = ""
+    });
+
+    db.SaveChanges();
+}
 }
 
 // Configure the HTTP request pipeline.
