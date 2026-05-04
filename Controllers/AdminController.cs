@@ -25,24 +25,20 @@ namespace ea_makina.Controllers
         [Route("")]
         public IActionResult Login(string username, string password)
         {
-            var adminUser = _configuration["Admin:Username"];
-            var adminPass = _configuration["Admin:Password"];
-
-            if (username == adminUser && password == adminPass)
+            if (username == _configuration["Admin:Username"] && password == _configuration["Admin:Password"])
             {
                 return RedirectToAction("Panel");
             }
-
             ViewBag.Error = "Hatalı giriş!";
             return View();
         }
 
         [HttpGet]
         [Route("panel")]
-        public async Task<IActionResult> Panel()
+        public IActionResult Panel()
         {
-            // HttpClient yerine doğrudan veritabanından listeyi çekiyoruz
-            var products = await _context.Products.ToListAsync();
+            // DIŞARIYA BAĞLANMA YOK, DOĞRUDAN VERİTABANINDAN ÇEKİYOR
+            var products = _context.Products.ToList();
             return View(products);
         }
 
@@ -52,54 +48,58 @@ namespace ea_makina.Controllers
 
         [HttpPost]
         [Route("urun-ekle")]
-        public async Task<IActionResult> AddProduct(Product product, IFormFile ImageFile)
+        public IActionResult AddProduct(Product product, IFormFile ImageFile)
         {
             if (ImageFile != null && ImageFile.Length > 0)
             {
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+                var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+                var imagesPath = Path.Combine(wwwrootPath, "images");
 
+                if (!Directory.Exists(imagesPath)) Directory.CreateDirectory(imagesPath);
+
+                var filePath = Path.Combine(imagesPath, fileName);
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    await ImageFile.CopyToAsync(stream);
+                    ImageFile.CopyTo(stream);
                 }
                 product.ImageUrl = "/images/" + fileName;
             }
 
-            // Doğrudan veritabanına ekle
+            // BURASI KRİTİK: HttpClient yerine doğrudan DB'ye ekliyoruz
             _context.Products.Add(product);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return RedirectToAction("Panel");
         }
 
         [HttpGet]
         [Route("urun-sil/{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = _context.Products.Find(id);
             if (product != null)
             {
                 _context.Products.Remove(product);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
             return RedirectToAction("Panel");
         }
 
         [HttpGet]
         [Route("urun-duzenle/{id}")]
-        public async Task<IActionResult> Edit(int id)
+        public IActionResult Edit(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = _context.Products.Find(id);
             return View(product);
         }
 
         [HttpPost]
         [Route("urun-duzenle/{id}")]
-        public async Task<IActionResult> Edit(Product product)
+        public IActionResult Edit(Product product)
         {
-            _context.Update(product);
-            await _context.SaveChangesAsync();
+            _context.Products.Update(product);
+            _context.SaveChanges();
             return RedirectToAction("Panel");
         }
     }
