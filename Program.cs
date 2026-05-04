@@ -1,10 +1,10 @@
 using ea_makina.Data;
-using ea_makina.Models; // 🔥 EKLENDİ
+using ea_makina.Models; // 1. EKSİK OLAN BUYDU: Product sınıfını tanımasını sağlar
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Veritabanı
+// Veritabanı Ayarı
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=app.db"));
 
@@ -13,9 +13,11 @@ builder.Services.AddHttpClient();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// NOT: Loglarda hata veren 'AddDatabaseDeveloperPageExceptionFilter' satırını sildik.
+
 var app = builder.Build();
 
-// DB oluştur + seed
+// Veritabanını oluştur ve içine örnek veri ekle
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -30,15 +32,14 @@ using (var scope = app.Services.CreateScope())
             Price = 0,
             ImageUrl = ""
         });
-
         db.SaveChanges();
     }
 }
 
-// Middleware
+// Geliştirme modu ayarları
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
+    app.UseDeveloperExceptionPage(); 
     app.UseSwagger();
     app.UseSwaggerUI();
 }
