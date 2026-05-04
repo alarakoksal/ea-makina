@@ -2,11 +2,8 @@ using ea_makina.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// ❗ SADECE BU KALACAK
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseInMemoryDatabase("TestDb"));
-
+    options.UseSqlite("Data Source=app.db"));
 builder.Configuration.AddEnvironmentVariables();
 
 builder.Services.AddControllersWithViews();
@@ -14,12 +11,15 @@ builder.Services.AddHttpClient();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseInMemoryDatabase("TestDb"));
+
 var app = builder.Build();
 
-// ✅ Seed data
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.EnsureCreated();
 
     if (!db.Products.Any())
     {
@@ -35,12 +35,7 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-}
+app.UseDeveloperExceptionPage();
 
 if (app.Environment.IsDevelopment())
 {
